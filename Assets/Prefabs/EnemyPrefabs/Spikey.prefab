@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 4770174015558628239}
   - component: {fileID: 2572034038284756533}
   - component: {fileID: 2834732800820534558}
+  - component: {fileID: 4027114434759299204}
+  - component: {fileID: 7001204512220043929}
   m_Layer: 0
   m_Name: Spikey
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,3 +121,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4a07e97a8d86641aeb50860284d76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &4027114434759299204
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7479856398887376059}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.004592657, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.21755767
+--- !u!114 &7001204512220043929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7479856398887376059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8e209f9f979b324d81fbce59c9c0872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyBulletPrefab: {fileID: 7160314500191647951, guid: a7f991b413699714a920197817ff70a3, type: 3}

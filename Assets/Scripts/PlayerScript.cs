@@ -28,6 +28,5 @@ public class PlayerScript : MonoBehaviour
         {
             playerAnimator.SetBool("Right", false);
         }
-        
     }
 }

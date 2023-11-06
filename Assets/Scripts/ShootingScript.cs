@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class ShootingScript : MonoBehaviour
@@ -12,7 +13,7 @@ public class ShootingScript : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject muzzleFlashPrefab;
-
+    [SerializeField] private AudioSource shootSoundSource;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && canShoot)
@@ -24,7 +25,8 @@ public class ShootingScript : MonoBehaviour
     public void Shoot()
     {
         Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-        Instantiate(muzzleFlashPrefab, transform.position, Quaternion.identity);
+        Destroy(Instantiate(muzzleFlashPrefab, transform.position, Quaternion.identity), 0.1f);
+        shootSoundSource.PlayOneShot(shootSoundSource.clip);
         canShoot = false;
         StartCoroutine("Cooldown");
     }

@@ -8,6 +8,8 @@ TagManager:
   - Background1
   - PlayerBullet
   - EnemyBullet
+  - Enemy
+  - LivesUI
   layers:
   - Default
   - TransparentFX
@@ -44,4 +46,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3769699597
+    locked: 0
+  - name: Foreground
+    uniqueID: 3224810007
     locked: 0

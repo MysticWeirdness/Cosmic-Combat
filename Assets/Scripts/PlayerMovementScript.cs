@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PlayerMovementScript : MonoBehaviour
     private AudioSource audioSource;
     private AudioClip audioClip;
     private GameController gameController;
+    [SerializeField] private List<GameObject> livesUI = new List<GameObject>();
 
     [Header("Values")]
     private int totalLives = 3;
@@ -43,6 +45,28 @@ public class PlayerMovementScript : MonoBehaviour
         else if(!STDMovement)
         {
             rigidBody.AddForce(Vector2.right * xInput * moveSpeed, ForceMode2D.Force);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "EnemyBullet")
+        {
+            Destroy(collision.gameObject);
+            PlayerHit();
+        }
+    }
+
+    private void PlayerHit()
+    {
+        currentLives--;
+        if(currentLives >= 0)
+        {
+            Destroy(livesUI[currentLives]);
+        }
+        else if (currentLives < 0)
+        {
+            gameController.KillPlayer();
         }
     }
 }
