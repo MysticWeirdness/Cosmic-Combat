@@ -6,37 +6,44 @@ public class EnemyScript : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private GameObject enemyBulletPrefab;
+    [SerializeField] private GameObject explosion3;
+    private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
 
     [Header("Values")]
-    private float cooldownDuration = 1f;
-    private int health = 1;
+    [SerializeField] private int health;
+    private float hitIndicatorDuration = 0.1f;
+
     private void Start()
     {
-        Shoot();
+        audioSource = GetComponent<AudioSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
-
-    private void Shoot()
+    public void Shoot()
     {
         Instantiate(enemyBulletPrefab, transform.position, Quaternion.identity);
-        StartCoroutine("Cooldown");
-    }
-    private IEnumerator Cooldown()
-    {
-        yield return new WaitForSeconds(cooldownDuration);
-        Shoot();
     }
 
     private void Hit()
     {
         health--;
+        StartCoroutine("HitIndicator");
         if(health == 0)
         {
             Death();
         }
     }
 
+    private IEnumerator HitIndicator()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(hitIndicatorDuration);
+        spriteRenderer.color = Color.white;
+    }
     private void Death()
     {
+        audioSource.PlayOneShot(audioSource.clip);
+        Destroy(Instantiate(explosion3, transform.position, Quaternion.identity), 0.3f);
         Destroy(gameObject);
     }
 
