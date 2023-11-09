@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 90496499041523754}
   - component: {fileID: 7067977787146486706}
   - component: {fileID: 3105432972420202812}
-  - component: {fileID: 915605084466583806}
+  - component: {fileID: 8129620932317031149}
   m_Layer: 0
   m_Name: Fighter
   m_TagString: Enemy
@@ -151,7 +151,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0034444332, y: 0.026407182}
@@ -172,7 +172,7 @@ MonoBehaviour:
   enemyBulletPrefab: {fileID: 7160314500191647951, guid: a7f991b413699714a920197817ff70a3, type: 3}
   explosion3: {fileID: 5356155067059157814, guid: 0850bd8a8599f4d4daa3118b3fab0ebc, type: 3}
   health: 2
---- !u!82 &915605084466583806
+--- !u!82 &8129620932317031149
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,8 +182,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2d2cfa6e9f4a7f04b9dc2418460536e4, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 5fb541d46b3c9b2489c44ad29f0e72d8, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

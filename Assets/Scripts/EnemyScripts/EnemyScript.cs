@@ -27,6 +27,7 @@ public class EnemyScript : MonoBehaviour
     private void Hit()
     {
         health--;
+        audioSource.PlayOneShot(audioSource.clip);
         StartCoroutine("HitIndicator");
         if(health == 0)
         {
@@ -42,11 +43,9 @@ public class EnemyScript : MonoBehaviour
     }
     private void Death()
     {
-        audioSource.PlayOneShot(audioSource.clip);
         Destroy(Instantiate(explosion3, transform.position, Quaternion.identity), 0.3f);
         Destroy(gameObject);
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "PlayerBullet")

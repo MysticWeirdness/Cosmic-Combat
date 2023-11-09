@@ -10,19 +10,23 @@ public class MenuHandler : MonoBehaviour
     private int mainGame = 3;
     private int settings = 4;
     private int credits = 5;
+    private int shop = 6;
     public void PlayButton()
     {
         SceneManager.LoadSceneAsync(mainGame);
+        Time.timeScale = 1.0f;
     }
 
     public void SettingsButton()
     {
         SceneManager.LoadSceneAsync(settings);
+        Time.timeScale = 1.0f;
     }
 
     public void CreditsButton()
     {
         SceneManager.LoadSceneAsync(credits);
+        Time.timeScale = 1.0f;
     }
 
     public void QuitButton()
@@ -33,5 +37,12 @@ public class MenuHandler : MonoBehaviour
     public void BackButton()
     {
         SceneManager.LoadSceneAsync(menu);
+        Time.timeScale = 1.0f;
+    }
+
+    public void ShopButton()
+    {
+        SceneManager.LoadSceneAsync(shop);
+        Time.timeScale = 1.0f;
     }
 }

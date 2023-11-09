@@ -10,6 +10,7 @@ TagManager:
   - EnemyBullet
   - Enemy
   - LivesUI
+  - WorldSpaceAudio
   layers:
   - Default
   - TransparentFX
