@@ -19,6 +19,7 @@ public class MenuHandler : MonoBehaviour
 
     public void SettingsButton()
     {
+        PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);
         SceneManager.LoadSceneAsync(settings);
         Time.timeScale = 1.0f;
     }
@@ -36,10 +37,15 @@ public class MenuHandler : MonoBehaviour
 
     public void BackButton()
     {
-        SceneManager.LoadSceneAsync(menu);
+        SceneManager.LoadSceneAsync(PlayerPrefs.GetInt("LastScene"));
         Time.timeScale = 1.0f;
     }
 
+    public void MenuButton()
+    {
+        SceneManager.LoadSceneAsync(menu);
+        Time.timeScale = 1.0f;
+    }
     public void ShopButton()
     {
         SceneManager.LoadSceneAsync(shop);

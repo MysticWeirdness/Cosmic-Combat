@@ -7,7 +7,7 @@ public class ShootingScript : MonoBehaviour
 {
     [Header("Shooting")]
     private bool canShoot = true;
-    private float duration = 0f;
+    private float duration = 0.25f;
     private float damage;
 
     [Header("Prefabs")]

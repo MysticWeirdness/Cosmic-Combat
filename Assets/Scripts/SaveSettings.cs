@@ -11,7 +11,20 @@ public class SaveSettings : MonoBehaviour
     [SerializeField] private TMP_Dropdown difficulty;
     [SerializeField] private Toggle standardMovement;
 
-
+    private void Start()
+    {
+        int x = PlayerPrefs.GetInt("Standard Movement");
+        if (x == 1)
+        {
+            standardMovement.isOn = true;
+        }
+        else if(x == 0)
+        {
+            standardMovement.isOn = false;
+        }
+        sfxVolume.value = PlayerPrefs.GetFloat("SFX Volume");
+        musicVolume.value = PlayerPrefs.GetFloat("Music Volume");
+    }
     public void StandardMovement()
     {
         int i = 0;

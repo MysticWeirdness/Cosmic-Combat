@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
 
     private void GenerateEnemies()
     {
-        for (int j = 0; j < 7; j++)
+        for (int j = 0; j < enemies.Count; j++)
         {
             for (int i = 0; i < 10; i++)
             {
