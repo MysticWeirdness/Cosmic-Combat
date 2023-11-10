@@ -38,6 +38,12 @@ public class GameController : MonoBehaviour
     {
         worldSpaceAudio = GameObject.FindWithTag("WorldSpaceAudio").GetComponent<WorldSpaceAudio>();
         yDistanceVector = new Vector3(0f, yDistance, 0f);
+        GenerateEnemies();
+        RandomizeEnemy();
+    }
+
+    private void GenerateEnemies()
+    {
         for (int j = 0; j < 7; j++)
         {
             for (int i = 0; i < 10; i++)
@@ -47,11 +53,13 @@ public class GameController : MonoBehaviour
         }
         enemyScripts = EnemyGroup.transform.GetComponentsInChildren<EnemyScript>().ToList();
         enemiesInGroup = EnemyGroup.transform.GetComponentsInChildren<Transform>().ToList();
-        RandomizeEnemy();
     }
-
     private void Update()
     {
+        if(enemiesInGroup.Count == 1)
+        {
+            GenerateEnemies();
+        }
         MoveEnemyGroup();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -137,10 +145,10 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if(lowestEnemy <= -5f)
+/*        if(lowestEnemy <= -5f)
         {
             Lose();
-        }
+        }*/
         if (farthestRightEnemy >= rightLimit && right == true)
         {
             EnemyGroup.transform.position += yDistanceVector;
