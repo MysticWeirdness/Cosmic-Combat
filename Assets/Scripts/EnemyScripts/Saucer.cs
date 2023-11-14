@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class Saucer : MonoBehaviour
 {
-    [SerializeField] private GameObject ufoPrefab;
-    private float ufoTimerDuration = 30f;
+    [SerializeField] private GameObject thousandEffect; 
+    private Rigidbody2D rigidBody;
+    private float speed = 5f;
     private void Start()
     {
-        StartCoroutine("UFOTimer");
+        rigidBody = GetComponent<Rigidbody2D>();
+        rigidBody.velocity = Vector2.right * speed;
     }
 
-    private IEnumerator UFOTimer()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        yield return new WaitForSeconds(ufoTimerDuration);
-        Destroy(Instantiate(ufoPrefab, transform.position, Quaternion.identity), 10f);
-        StartCoroutine("UFOTimer");
+        if (collision.gameObject.tag == "PlayerBullet")
+        {
+            Destroy(Instantiate(thousandEffect, transform.position, Quaternion.identity), 0.5f);
+        }
     }
 }

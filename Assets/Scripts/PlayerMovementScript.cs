@@ -12,6 +12,7 @@ public class PlayerMovementScript : MonoBehaviour
     [SerializeField] private List<AudioClip> audioClips = new List<AudioClip>();
     private GameController gameController;
     [SerializeField] private List<GameObject> livesUI = new List<GameObject>();
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     [Header("Values")]
     private int totalLives = 3;
@@ -21,7 +22,8 @@ public class PlayerMovementScript : MonoBehaviour
     private float rightLimit = 8.5f;
     private float moveSpeed = 5f;
     private float xInput;
-    [SerializeField] private bool STDMovement;
+    private float hitIndicatorDuration = 0.1f;
+    private bool STDMovement;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject explosionPrefab;
@@ -107,6 +109,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         currentLives--;
         audioSource.PlayOneShot(audioClips[0]);
+        StartCoroutine("HitIndicator");
         if(currentLives >= 0)
         {
             Destroy(livesUI[currentLives]);
@@ -116,5 +119,12 @@ public class PlayerMovementScript : MonoBehaviour
             Destroy(Instantiate(explosionPrefab, transform.position, Quaternion.identity), 0.3f);
             gameController.StartCoroutine("PlayerDeathOffsetTimer");
         }
+    }
+
+    private IEnumerator HitIndicator()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(hitIndicatorDuration);
+        spriteRenderer.color = Color.white;
     }
 }

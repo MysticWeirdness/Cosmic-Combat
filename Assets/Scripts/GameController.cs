@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private TextMeshProUGUI waveText;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI highscoreText;
+    [SerializeField] private GameObject newHighscore;
     private WorldSpaceAudio worldSpaceAudio;
 
     [Header("Values")]
@@ -29,7 +31,7 @@ public class GameController : MonoBehaviour
 
     [Header("EnemyMovement")]
     private float yDistance = -0.5f;
-    private float speed = 1f;
+    private float speed = 0.25f;
     private int moveDirection = 1;
     private float leftLimit = -8.5f;
     private float rightLimit = 8.5f;
@@ -37,6 +39,7 @@ public class GameController : MonoBehaviour
     private float farthestRightEnemy = 0f;
     private float lowestEnemy = 0f;
     private bool right = true;
+    private float enemyGroupTickingTime = 0.4f;
 
     [Header("Vectors")]
     private Vector3 yDistanceVector;
@@ -47,6 +50,7 @@ public class GameController : MonoBehaviour
         yDistanceVector = new Vector3(0f, yDistance, 0f);
         GenerateEnemies();
         RandomizeEnemy();
+        StartCoroutine("EnemyGroupTimer");
     }
 
     // This function will generate a new enemy group
@@ -63,14 +67,20 @@ public class GameController : MonoBehaviour
         enemyScripts = EnemyGroup.transform.GetComponentsInChildren<EnemyScript>().ToList();
         enemiesInGroup = EnemyGroup.transform.GetComponentsInChildren<Transform>().ToList();
     }
+
+    private IEnumerator EnemyGroupTimer()
+    {
+        yield return new WaitForSeconds(enemyGroupTickingTime);
+        MoveEnemyGroup();
+        StartCoroutine("EnemyGroupTimer");
+    }
     private void Update()
     {
-        if(enemiesInGroup.Count == 1)
+        if (enemiesInGroup.Count == 1)
         {
             wave++;
             GenerateEnemies();
         }
-        MoveEnemyGroup();
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!paused)
@@ -114,10 +124,16 @@ public class GameController : MonoBehaviour
     // Called when the player loses
     private void Lose()
     {
+        if(score > PlayerPrefs.GetInt("Highscore"))
+        {
+            PlayerPrefs.SetInt("Highscore", score);
+            newHighscore.SetActive(true);
+        }
         worldSpaceAudio.StopBGMusic();
         worldSpaceAudio.PlayLoseSFX();
         Time.timeScale = 0;
         DeathUI.SetActive(true);
+        highscoreText.text = "Highscore: \n \n" + " " + PlayerPrefs.GetInt("Highscore").ToString("00000000");
     }
 
     // Starts the coroutine when the player dies
@@ -134,7 +150,7 @@ public class GameController : MonoBehaviour
     {
         enemyScripts.RemoveAll(s => s == null);
         int listLength = enemyScripts.Count;
-        int randomEnemy = UnityEngine.Random.Range(0, listLength);
+        int randomEnemy = UnityEngine.Random.Range(0, listLength - 1);
         enemyScripts[randomEnemy].Shoot();
         StartCoroutine("Cooldown");
     }
@@ -167,7 +183,7 @@ public class GameController : MonoBehaviour
             }
         }
 
-        foreach (Transform E in enemiesInGroup)
+/*        foreach (Transform E in enemiesInGroup)
         {
             if (E.position.y <= lowestEnemy)
             {
@@ -180,7 +196,7 @@ public class GameController : MonoBehaviour
             {
                 Lose();
             }
-        }
+        }*/
         
         if (farthestRightEnemy >= rightLimit && right == true)
         {
@@ -194,7 +210,7 @@ public class GameController : MonoBehaviour
             moveDirection = 1;
             right = true;
         }
-        EnemyGroup.transform.position += new Vector3(Time.deltaTime * moveDirection * speed, 0f, 0f);
+        EnemyGroup.transform.position += new Vector3(moveDirection * speed, 0f, 0f);
         farthestRightEnemy = -100f;
         farthestLeftEnemy = 100f;
         lowestEnemy = 0;
