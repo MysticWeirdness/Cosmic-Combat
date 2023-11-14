@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -14,11 +15,17 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject DeathUI;
     [SerializeField] private GameObject PauseUI;
     [SerializeField] private GameObject player;
+    [SerializeField] private TextMeshProUGUI waveText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     private WorldSpaceAudio worldSpaceAudio;
 
     [Header("Values")]
     private float cooldownDuration;
     private bool paused = false;
+    private bool lost = false;
+    private int wave = 1;
+    private int score = 0;
+    private float enemyCooldownMultiplier = 2f;
 
     [Header("EnemyMovement")]
     private float yDistance = -0.5f;
@@ -42,8 +49,10 @@ public class GameController : MonoBehaviour
         RandomizeEnemy();
     }
 
+    // This function will generate a new enemy group
     private void GenerateEnemies()
     {
+        EnemyGroup.transform.position = Vector3.zero;
         for (int j = 0; j < enemies.Count; j++)
         {
             for (int i = 0; i < 10; i++)
@@ -58,6 +67,7 @@ public class GameController : MonoBehaviour
     {
         if(enemiesInGroup.Count == 1)
         {
+            wave++;
             GenerateEnemies();
         }
         MoveEnemyGroup();
@@ -72,8 +82,20 @@ public class GameController : MonoBehaviour
                 Unpause();
             }
         }
+        UpdateUI();
     }
 
+    public void AddScore(int value)
+    {
+        score += value;
+    }
+    private void UpdateUI()
+    {
+        waveText.text = "Wave: " + wave.ToString();
+        scoreText.text = score.ToString("00000000");
+    }
+
+    // Called when the game is paused
     private void Pause()
     {
         PauseUI.SetActive(true);
@@ -81,6 +103,7 @@ public class GameController : MonoBehaviour
         paused = true;
     }
 
+    // Called when the game is unpaused
     public void Unpause()
     {
         PauseUI.SetActive(false);
@@ -88,6 +111,7 @@ public class GameController : MonoBehaviour
         paused = false;
     }
 
+    // Called when the player loses
     private void Lose()
     {
         worldSpaceAudio.StopBGMusic();
@@ -96,13 +120,16 @@ public class GameController : MonoBehaviour
         DeathUI.SetActive(true);
     }
 
-
+    // Starts the coroutine when the player dies
     public IEnumerator PlayerDeathOffsetTimer()
     {
+        lost = true;
         Destroy(player);
         yield return new WaitForSeconds(0.5f);
         Lose();
     }
+
+    // This function will choose a random enemy out of all the enemies to fire a bullet
     private void RandomizeEnemy()
     {
         enemyScripts.RemoveAll(s => s == null);
@@ -111,13 +138,16 @@ public class GameController : MonoBehaviour
         enemyScripts[randomEnemy].Shoot();
         StartCoroutine("Cooldown");
     }
+
+    // This is used for the enemy's cooldown inbetween each shot
     private IEnumerator Cooldown()
     {
-        cooldownDuration = UnityEngine.Random.value;
+        cooldownDuration = UnityEngine.Random.value * enemyCooldownMultiplier;
         yield return new WaitForSeconds(cooldownDuration);
         RandomizeEnemy();
     }
 
+    // This function will move the entire group of enemies left, right, and down
     private void MoveEnemyGroup()
     {
         enemiesInGroup.RemoveAll(s => s == null);
@@ -144,11 +174,14 @@ public class GameController : MonoBehaviour
                 lowestEnemy = E.position.y;
             }
         }
-
-/*        if(lowestEnemy <= -5f)
+        if (!lost)
         {
-            Lose();
-        }*/
+            if (lowestEnemy <= player.transform.position.y - 1f)
+            {
+                Lose();
+            }
+        }
+        
         if (farthestRightEnemy >= rightLimit && right == true)
         {
             EnemyGroup.transform.position += yDistanceVector;

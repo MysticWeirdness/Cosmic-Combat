@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Saucer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject ufoPrefab;
+    private float ufoTimerDuration = 30f;
+    private void Start()
     {
-        
+        StartCoroutine("UFOTimer");
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator UFOTimer()
     {
-        
+        yield return new WaitForSeconds(ufoTimerDuration);
+        Destroy(Instantiate(ufoPrefab, transform.position, Quaternion.identity), 10f);
+        StartCoroutine("UFOTimer");
     }
 }

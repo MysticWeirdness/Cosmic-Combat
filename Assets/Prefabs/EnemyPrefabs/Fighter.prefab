@@ -172,6 +172,7 @@ MonoBehaviour:
   enemyBulletPrefab: {fileID: 7160314500191647951, guid: a7f991b413699714a920197817ff70a3, type: 3}
   explosion3: {fileID: 5356155067059157814, guid: 0850bd8a8599f4d4daa3118b3fab0ebc, type: 3}
   health: 2
+  value: 200
 --- !u!82 &8129620932317031149
 AudioSource:
   m_ObjectHideFlags: 0
