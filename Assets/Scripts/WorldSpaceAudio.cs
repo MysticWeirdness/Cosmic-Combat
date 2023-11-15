@@ -9,6 +9,8 @@ public class WorldSpaceAudio : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = PlayerPrefs.GetFloat("Music Volume");
+        audioSource.Play();
     }
 
     public void StopBGMusic()
@@ -18,10 +20,12 @@ public class WorldSpaceAudio : MonoBehaviour
 
     public void PlayLoseSFX()
     {
+        audioSource.volume = PlayerPrefs.GetFloat("SFX Volume");
         audioSource.PlayOneShot(audioClips[0]);
     }
     public void StartBGMusic()
     {
+        audioSource.volume = PlayerPrefs.GetFloat("Music Volume");
         audioSource.Play();
     }
 }

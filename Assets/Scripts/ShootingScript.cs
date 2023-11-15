@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class ShootingScript : MonoBehaviour
@@ -14,6 +15,11 @@ public class ShootingScript : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject muzzleFlashPrefab;
     [SerializeField] private AudioSource shootSoundSource;
+
+    private void Start()
+    {
+        shootSoundSource.volume = PlayerPrefs.GetFloat("SFX Volume");
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && canShoot)

@@ -9,6 +9,7 @@ public class ExplosionScript : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = PlayerPrefs.GetFloat("SFX Volume");
         audioSource.PlayOneShot(audioSource.clip);
     }
 }    

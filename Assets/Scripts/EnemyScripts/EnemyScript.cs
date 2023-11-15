@@ -30,6 +30,7 @@ public class EnemyScript : MonoBehaviour
     private void Hit()
     {
         health--;
+        audioSource.volume = PlayerPrefs.GetFloat("SFX Volume");
         audioSource.PlayOneShot(audioSource.clip);
         StartCoroutine("HitIndicator");
         if(health == 0)
