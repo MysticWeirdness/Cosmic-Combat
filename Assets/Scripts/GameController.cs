@@ -37,20 +37,32 @@ public class GameController : MonoBehaviour
     private float rightLimit = 8.5f;
     private float farthestLeftEnemy = 0f;
     private float farthestRightEnemy = 0f;
-    private float lowestEnemy = 0f;
     private bool right = true;
     private float enemyGroupTickingTime = 0.4f;
+    private int oldEnemyMovement;
 
     [Header("Vectors")]
     private Vector3 yDistanceVector;
 
     private void Start()
     {
+        oldEnemyMovement = PlayerPrefs.GetInt("OldEnemyMovement");
         worldSpaceAudio = GameObject.FindWithTag("WorldSpaceAudio").GetComponent<WorldSpaceAudio>();
         yDistanceVector = new Vector3(0f, yDistance, 0f);
         GenerateEnemies();
         RandomizeEnemy();
-        StartCoroutine("EnemyGroupTimer");
+        if(oldEnemyMovement == 1)
+        {
+            StartCoroutine("EnemyGroupTimer");
+        }
+        if (oldEnemyMovement == 1)
+        {
+            speed = 0.25f;
+        }
+        else if(oldEnemyMovement == 0)
+        {
+            speed = 1f;
+        }
     }
 
     // This function will generate a new enemy group
@@ -91,6 +103,10 @@ public class GameController : MonoBehaviour
             {
                 Unpause();
             }
+        }
+        if(oldEnemyMovement == 0)
+        {
+            MoveEnemyGroup();
         }
         UpdateUI();
     }
@@ -183,21 +199,6 @@ public class GameController : MonoBehaviour
             }
         }
 
-/*        foreach (Transform E in enemiesInGroup)
-        {
-            if (E.position.y <= lowestEnemy)
-            {
-                lowestEnemy = E.position.y;
-            }
-        }
-        if (!lost)
-        {
-            if (lowestEnemy <= player.transform.position.y - 1f)
-            {
-                Lose();
-            }
-        }*/
-        
         if (farthestRightEnemy >= rightLimit && right == true)
         {
             EnemyGroup.transform.position += yDistanceVector;
@@ -210,9 +211,15 @@ public class GameController : MonoBehaviour
             moveDirection = 1;
             right = true;
         }
-        EnemyGroup.transform.position += new Vector3(moveDirection * speed, 0f, 0f);
+        if(oldEnemyMovement == 1)
+        {
+            EnemyGroup.transform.position += new Vector3(moveDirection * speed, 0f, 0f);
+        }
+        else if(oldEnemyMovement == 0)
+        {
+            EnemyGroup.transform.position += new Vector3(moveDirection * speed * Time.deltaTime, 0f, 0f);
+        }
         farthestRightEnemy = -100f;
         farthestLeftEnemy = 100f;
-        lowestEnemy = 0;
     }
 }
