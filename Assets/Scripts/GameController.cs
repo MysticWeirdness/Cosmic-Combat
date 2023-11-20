@@ -19,6 +19,13 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI highscoreText;
     [SerializeField] private GameObject newHighscore;
+    [SerializeField] private GameObject initials;
+    [SerializeField] private GameObject winBanner;
+    [SerializeField] private GameObject loseBanner;
+    [SerializeField] private GameObject restart;
+    [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject settings;
+    [SerializeField] private GameObject shop;
     private WorldSpaceAudio worldSpaceAudio;
 
     [Header("Values")]
@@ -140,9 +147,17 @@ public class GameController : MonoBehaviour
     // Called when the player loses
     private void Lose()
     {
+        loseBanner.SetActive(true);
         if(score > PlayerPrefs.GetInt("Highscore"))
         {
+            loseBanner.SetActive(false);
+            winBanner.SetActive(true);
             PlayerPrefs.SetInt("Highscore", score);
+            initials.SetActive(true);
+            restart.SetActive(false);
+            menu.SetActive(false);
+            settings.SetActive(false);
+            shop.SetActive(false);
             newHighscore.SetActive(true);
         }
         worldSpaceAudio.StopBGMusic();
