@@ -869,6 +869,7 @@ MonoBehaviour:
   menu: {fileID: 1327153084}
   restart: {fileID: 1148716793}
   newHighscore: {fileID: 1639433608}
+  highScoreHandler: {fileID: 0}
 --- !u!1 &411262284
 GameObject:
   m_ObjectHideFlags: 0
@@ -3953,6 +3954,8 @@ MonoBehaviour:
   menu: {fileID: 1327153084}
   settings: {fileID: 482438603}
   shop: {fileID: 956498358}
+  highScoreHandler: {fileID: 1667871873}
+  bunker: {fileID: 3932279067844393723, guid: bdbfc4952d17a8d4aa975011d13976d3, type: 3}
 --- !u!4 &1660938174
 Transform:
   m_ObjectHideFlags: 0
@@ -3967,8 +3970,70 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1742589152}
+  - {fileID: 1667871872}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1667871870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1667871872}
+  - component: {fileID: 1667871871}
+  - component: {fileID: 1667871873}
+  m_Layer: 0
+  m_Name: JSON
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1667871871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667871870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4712c5077bc02488da986fd4368a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filename: Highscores.json
+--- !u!4 &1667871872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667871870}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1660938174}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1667871873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667871870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd615e72a86c384d9a3e82dc7a547c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_spots: 5
+  fileName: Highscores.json
+  cur_score: 0
 --- !u!1 &1708630385
 GameObject:
   m_ObjectHideFlags: 0

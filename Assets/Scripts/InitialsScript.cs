@@ -14,6 +14,7 @@ public class InitialsScript : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject restart;
     [SerializeField] private GameObject newHighscore;
+    [SerializeField] private HighScoreHandler highScoreHandler;
 
     private string fullInitials;
     private int currentInitial = 0;
@@ -85,6 +86,7 @@ public class InitialsScript : MonoBehaviour
     public void ConfirmInitials()
     {
         fullInitials = initials[0].text + initials[1].text + initials[2].text;
+        //       highScoreHandler.onClick(fullInitials, PlayerPrefs.GetInt("Highscore"));
         PlayerPrefs.SetString("HighscoreInitials", fullInitials);
         newHighscore.SetActive(false);
         shop.SetActive(true);

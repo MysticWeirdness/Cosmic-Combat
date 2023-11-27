@@ -26,12 +26,14 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject settings;
     [SerializeField] private GameObject shop;
+    [SerializeField] private HighScoreHandler highScoreHandler;
+    [SerializeField] private GameObject bunker;
     private WorldSpaceAudio worldSpaceAudio;
 
     [Header("Values")]
     private float cooldownDuration;
+    private int bunkerCount = 3;
     private bool paused = false;
-    private bool lost = false;
     private int wave = 1;
     private int score = 0;
     private float enemyCooldownMultiplier = 2f;
@@ -70,7 +72,12 @@ public class GameController : MonoBehaviour
         {
             speed = 1f;
         }
+        for(int i = 0; i < bunkerCount; i++)
+        {
+            Instantiate(bunker, new Vector3(i, -2.5f, 0f), Quaternion.Euler(0, 0, 90));
+        }
     }
+
 
     // This function will generate a new enemy group
     private void GenerateEnemies()
@@ -170,7 +177,6 @@ public class GameController : MonoBehaviour
     // Starts the coroutine when the player dies
     public IEnumerator PlayerDeathOffsetTimer()
     {
-        lost = true;
         Destroy(player);
         yield return new WaitForSeconds(0.5f);
         Lose();

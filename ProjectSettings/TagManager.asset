@@ -54,3 +54,9 @@ TagManager:
   - name: Foreground
     uniqueID: 3224810007
     locked: 0
+  - name: Enemies
+    uniqueID: 266078621
+    locked: 0
+  - name: UFO
+    uniqueID: 1032613893
+    locked: 0
